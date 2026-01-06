@@ -1,33 +1,32 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+# Reply Guy Indicator
 
-## Getting Started
+A MV3 Chrome extension that shows how many replies you’ve posted today on X (`x.com`).
 
-First, run the development server:
+## Usage
+
+- Open a reply composer on X/Twitter: a small counter pill appears next to the submit **Reply** button.
+- The extension toolbar badge also reflects today’s count.
+
+## Install (manual)
+
+1. Open `chrome://extensions`
+2. Enable Developer Mode (screenshot below)
+3. Click “Load unpacked” → select `build/chrome-mv3-prod` (after `pnpm build`)
+
+![Developer Mode instruction](https://s2.loli.net/2026/01/06/BfEoWbrlQTUK4hG.png)
+
+
+## How it counts
+
+- The background service worker detects successful “reply” posts via X/Twitter `CreateTweet` requests.
+- Counts are stored per-day in `chrome.storage.local`, so they persist after reloads.
+
+## Development
 
 ```bash
+pnpm install
 pnpm dev
-# or
-npm run dev
 ```
 
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
+Then load the unpacked extension from `build/chrome-mv3-dev`.
 
-This project uses a MV3 background service worker (`background.ts`) and a content script (`content.ts`). To add an options page, create `options.tsx` at the project root.
-
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
-
-## Making production build
-
-Run the following:
-
-```bash
-pnpm build
-# or
-npm run build
-```
-
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
-
-## Submit to the webstores
-
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
