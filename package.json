@@ -1,7 +1,7 @@
 {
   "name": "reply-guy-indicator",
   "displayName": "Reply guy indicator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A chrome extension to help you count your replies",
   "author": "AHpx",
   "scripts": {
