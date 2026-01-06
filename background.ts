@@ -91,6 +91,7 @@ chrome.runtime.onMessage.addListener((rawMessage: unknown, sender, sendResponse)
       if (message.type === "RGI/GET_TODAY_COUNT") {
         const counts = await getCounts()
         const today = getTodayKey()
+        setBadge(counts[today] ?? 0)
         const response: OkResponse = {
           ok: true,
           date: today,
@@ -127,4 +128,3 @@ chrome.runtime.onMessage.addListener((rawMessage: unknown, sender, sendResponse)
 })
 
 export {}
-
