@@ -12,13 +12,7 @@ type GetTodayCountMessage = {
   type: "RGI/GET_TODAY_COUNT"
 }
 
-type IncrementReplyMessage = {
-  type: "RGI/INCREMENT_REPLY"
-  at?: number
-  url?: string
-}
-
-type ReplyGuyMessage = GetTodayCountMessage | IncrementReplyMessage
+type ReplyGuyMessage = GetTodayCountMessage
 
 type OkResponse = {
   ok: true
@@ -60,12 +54,6 @@ const isReplySubmitButton = (element: Element | null): element is HTMLElement =>
   const text = element.innerText?.trim() ?? ""
   const ariaLabel = element.getAttribute("aria-label")?.trim() ?? ""
   return /\breply\b/i.test(text) || /\breply\b/i.test(ariaLabel)
-}
-
-const isDisabledButton = (element: HTMLElement) => {
-  if ("disabled" in element && Boolean((element as HTMLButtonElement).disabled))
-    return true
-  return element.getAttribute("aria-disabled") === "true"
 }
 
 const createIndicatorElement = () => {
@@ -170,47 +158,6 @@ const main = async () => {
     todayCount = nextCount
     scheduleMountIndicators()
   })
-
-  let lastIncrementAt = 0
-  let incrementInFlight = false
-
-  document.addEventListener(
-    "click",
-    (event) => {
-      const target = event.target as Element | null
-      const button = target?.closest?.(
-        '[data-testid="tweetButton"], [data-testid="tweetButtonInline"]'
-      )
-
-      if (!isReplySubmitButton(button)) return
-      if (isDisabledButton(button)) return
-
-      const now = Date.now()
-      if (incrementInFlight) return
-      if (now - lastIncrementAt < 1500) return
-
-      lastIncrementAt = now
-      incrementInFlight = true
-
-      void (async () => {
-        try {
-          const updated = await sendMessage({
-            type: "RGI/INCREMENT_REPLY",
-            at: now,
-            url: location.href
-          })
-
-          if (updated.ok) {
-            todayCount = updated.count
-            scheduleMountIndicators()
-          }
-        } finally {
-          incrementInFlight = false
-        }
-      })()
-    },
-    true
-  )
 }
 
 void main()
