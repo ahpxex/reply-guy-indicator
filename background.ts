@@ -27,6 +27,7 @@ type ErrorResponse = {
 
 const CREATE_TWEET_URLS = [
   "*://x.com/i/api/graphql/*/CreateTweet*",
+  "*://pro.x.com/i/api/graphql/*/CreateTweet*",
   "*://twitter.com/i/api/graphql/*/CreateTweet*"
 ]
 

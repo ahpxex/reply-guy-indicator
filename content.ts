@@ -1,7 +1,7 @@
 import type { PlasmoCSConfig } from "plasmo"
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://x.com/*", "https://twitter.com/*"],
+  matches: ["https://x.com/*", "https://pro.x.com/*", "https://twitter.com/*"],
   run_at: "document_idle"
 }
 
